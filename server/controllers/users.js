@@ -1,5 +1,6 @@
 const User = require('../models').user;
 const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jsonwebtoken');
 
 exports.getAllUsers = async (req, res, next) => {
     try{
@@ -13,8 +14,19 @@ exports.getAllUsers = async (req, res, next) => {
     }
 }
 
-exports.createNewUser = (req, res, next) => {
-    console.log(req.body);
+exports.createNewUser = async (req, res, next) => {
+    let user = await User.findOne({
+        where: {
+            email: req.body.email,
+        }
+    });
+
+    if(user){
+        return res.status(403).json({
+            status: 403,
+            message: 'User already exists'
+        })
+    }
     bcrypt.hash(req.body.password, null, null, async (err, hash) => {
         if(err){
             return next(err);
@@ -37,3 +49,31 @@ exports.createNewUser = (req, res, next) => {
     })
     
 }
+
+exports.signIn = async (req, res, next) => {
+    try{
+        let user = await User.findOne({
+            where: {
+                email: req.body.email,
+            }
+        });
+
+        if(!user){
+            return res.status(400).json({
+                status: 400,
+                message: 'User not found'
+            })
+        }
+
+        let token  = await jwt.sign({ user }, process.env.TOKEN_KEY, {expiresIn: '60s'});
+
+        return res.status(200).json({
+            status: 200,
+            token: token,
+        })
+        
+    }catch(err){
+        return next(err);
+    }
+}
+
