@@ -31,8 +31,6 @@ exports.displayAllNotes = async (req, res, next) => {
 
 exports.findOneNote = async (req, res, next) => {
     let title = req.params.title;
-    console.log(req.params.title);
-
     try{
         let note = await Note.findOne({
             where: {
@@ -43,6 +41,24 @@ exports.findOneNote = async (req, res, next) => {
         res.status(200).json({
             status: 200,
             data: note,
+        })
+    }catch(err){
+        return next(err);
+    }
+    
+}
+
+exports.deleteNote = async (req, res, next) => {
+    try{
+        let response = await Note.destroy({
+            where: {
+                id: req.params.id,
+            }
+        });
+
+        res.status(200).json({
+            status: 200,
+            message: 'Successfully deleted note'
         })
     }catch(err){
         return next(err);
