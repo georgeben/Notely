@@ -6,8 +6,10 @@ router.get('/', (req, res) => {
     res.send('Welcome to Notely API');
 });
 
-router.post('/notes', noteController.create);
+router.post('/notes', noteController.createNote);
 
-router.get('/notes', noteController.display)
+router.get('/notes', noteController.displayAllNotes);
+
+router.get('/notes/:title', noteController.findOneNote)
 
 module.exports = router;
