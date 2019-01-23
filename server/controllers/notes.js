@@ -38,6 +38,13 @@ exports.findOneNote = async (req, res, next) => {
             }
         });
 
+        if(!note){
+            return res.status(404).json({
+                status: 404,
+                message: 'Note does not exist'
+            })
+        }
+
         res.status(200).json({
             status: 200,
             data: note,
@@ -55,6 +62,13 @@ exports.deleteNote = async (req, res, next) => {
                 id: req.params.id,
             }
         });
+
+        if(!response){
+            return res.status(404).json({
+                status: 404,
+                message: 'Note does not exist'
+            })
+        }
 
         res.status(200).json({
             status: 200,
