@@ -7,8 +7,12 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+/* const userModel = require('./models').user;
+userModel.findOne().then(result => console.log("Users". result));
+*/
+
 //Routes
-const apiRoute = require('./routes/index')
+const noteRoute = require('./routes/notes')
 
 const app = express();
 NODE_ENV === 'production'? app.use(morgan('combined')) : app.use(morgan('dev'));
@@ -21,7 +25,7 @@ app.get('/', (req, res) => {
     res.send('Hello world');
 })
 
-app.use('/api', apiRoute)
+app.use('/api/notes', noteRoute)
 
 app.listen(PORT, () => {
     logger.log({
