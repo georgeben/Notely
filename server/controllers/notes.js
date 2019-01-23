@@ -65,3 +65,32 @@ exports.deleteNote = async (req, res, next) => {
     }
     
 }
+
+exports.updateNote = async (req, res, next) => {
+    let noteId = req.params.id;
+
+    try{
+        let note = await Note.findById(noteId);
+        if(!note){
+            console.log("Note not found");
+            return res.status(404).json({
+                status: 404,
+                message: 'Note does not exist'
+            });
+        }
+
+        let updatedNote = await note.update({
+            title: req.body.title,
+            content: req.body.content,
+        });
+
+        res.status(200).json({
+            status: 200,
+            message: 'Successfully updated note',
+            data: updatedNote
+        })
+
+    }catch(err){
+        return next(err);
+    }
+}

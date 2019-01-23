@@ -12,6 +12,8 @@ router.get('/notes', noteController.displayAllNotes);
 
 router.get('/notes/:title', noteController.findOneNote);
 
+router.put('/notes/:id', noteController.updateNote)
+
 router.delete('/notes/:id', noteController.deleteNote);
 
 module.exports = router;
