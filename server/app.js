@@ -5,12 +5,16 @@ const logger = require('./config/winston.config');
 
 const PORT = process.env.PORT || 3000;
 
+const apiRoute = require('./routes/index')
+
 
 const app = express();
 
 app.get('/', (req, res) => {
     res.send('Hello world');
 })
+
+app.use('/api', apiRoute)
 
 app.listen(PORT, () => {
     logger.log({
