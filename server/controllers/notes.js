@@ -1,20 +1,42 @@
 const Note = require('../models').note;
+const jwt = require('jsonwebtoken');
 
-exports.createNote = async (req, res, next) => {
-    try{
-        let newNote = await Note.create({
+/*function verifyToken(token){
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, process.env.TOKEN_KEY, (err, match) => {
+            if(err){
+                reject(err);
+            }
+            resolve(match)
+        })
+    })
+}
+*/
+
+exports.createNote = (req, res, next) => {
+    jwt.verify(req.headers.authorization, process.env.TOKEN_KEY, (err, match) => {
+        if(err){
+            return res.status(401).json({
+                message: 'Invalid token'
+            })
+        }
+
+        let user = match.user;
+        Note.create({
             title: req.body.title,
             content: req.body.content,
+            user_id: user.id,
         })
-
-        res.status(200).json({
-            message: 'Successfully created',
-            note: newNote,
+        .then((result) => { 
+            res.status(200).json({
+                message: "Success",
+                data: result,
+            })
         })
-    }catch(err){
-        return next(err);
-    }
-    
+        .catch((err) => {
+            return next(err);
+        })
+    })
 }
 
 exports.displayAllNotes = async (req, res, next) => {

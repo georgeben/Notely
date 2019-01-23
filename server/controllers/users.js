@@ -65,7 +65,7 @@ exports.signIn = async (req, res, next) => {
             })
         }
 
-        let token  = await jwt.sign({ user }, process.env.TOKEN_KEY, {expiresIn: '60s'});
+        let token  = await jwt.sign({ user }, process.env.TOKEN_KEY, {expiresIn: '12h'});
 
         return res.status(200).json({
             status: 200,
