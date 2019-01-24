@@ -34,7 +34,9 @@ export default {
                     password: this.password,
                 })
                 .then(res => {
-                    localStorage.setItem('token',res.data.token)
+                    console.log(res.data)
+                    localStorage.setItem('token',res.data.token);
+                    localStorage.setItem('user', JSON.stringify(res.data.user));
                     if (localStorage.getItem('token') != null){
                         if(this.$route.params.nextUrl != null){
                             this.$router.push(this.$route.params.nextUrl)
