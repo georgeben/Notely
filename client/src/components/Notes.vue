@@ -1,16 +1,21 @@
 <template>
     <div>
-        <h1>Note title</h1>
+        <h3>Notely feed</h3>
         <div v-bind:key="note.id" v-for="note in notes" >
-            <h5>{{note.title}}</h5>
+            <NoteItem v-bind:note="note" />
         </div>
     </div>
 </template>
 
 <script>
+import NoteItem from './NoteItem.vue';
+
 export default {
     name: 'Notes',
-    props: ["notes"]
+    props: ["notes"],
+    components: {
+        NoteItem,
+    }
 }
 </script>
 
