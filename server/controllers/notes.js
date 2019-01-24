@@ -1,7 +1,7 @@
 const Note = require('../models').note;
 const jwt = require('jsonwebtoken');
 
-/*function verifyToken(token){
+function verifyToken(token){
     return new Promise((resolve, reject) => {
         jwt.verify(token, process.env.TOKEN_KEY, (err, match) => {
             if(err){
@@ -11,7 +11,6 @@ const jwt = require('jsonwebtoken');
         })
     })
 }
-*/
 
 exports.createNote = (req, res, next) => {
     jwt.verify(req.headers.authorization, process.env.TOKEN_KEY, (err, match) => {
@@ -103,28 +102,39 @@ exports.deleteNote = async (req, res, next) => {
 
 exports.updateNote = async (req, res, next) => {
     let noteId = req.params.id;
+    let token = req.headers.authorization;
 
     try{
-        let note = await Note.findById(noteId);
-        if(!note){
-            return res.status(404).json({
-                status: 404,
-                message: 'Note does not exist'
+        let match = await verifyToken(token);
+        let user = match.user;
+
+        if(user){
+            let note = await Note.findById(noteId);
+            if(!note){
+                return res.status(404).json({
+                    status: 404,
+                    message: 'Note does not exist'
+                });
+            }
+    
+            let updatedNote = await note.update({
+                title: req.body.title,
+                content: req.body.content,
             });
+    
+            res.status(200).json({
+                status: 200,
+                message: 'Successfully updated note',
+                data: updatedNote
+            })
         }
 
-        let updatedNote = await note.update({
-            title: req.body.title,
-            content: req.body.content,
-        });
-
-        res.status(200).json({
-            status: 200,
-            message: 'Successfully updated note',
-            data: updatedNote
-        })
-
     }catch(err){
+        if(err.message == 'invalid signature'){
+            return res.status(403).json({
+                message: 'Unauthorized action'
+            })
+        }
         return next(err);
     }
 }
