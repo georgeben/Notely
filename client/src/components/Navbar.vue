@@ -1,7 +1,7 @@
 
 <template>
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <router-link to="/" class="navbar-brand">Home</router-link>
+    <nav class="navbar navbar-expand-md navbar-light ">
+        <router-link to="/" class="navbar-brand">Notely</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn search-btn my-2 my-sm-0" type="submit">Search</button>
         </form>
 
         <ul class="navbar-nav ml-auto">
@@ -38,6 +38,15 @@ export default {
 </script>
 
 <style scoped>
+nav.navbar{
+    background-color: #70CCA2;
+    color: white;
+}
 
+.search-btn{
+    background-color: #70CCA2;
+    border: 1px solid #fff;
+    color: #fff;
+}
 </style>
 

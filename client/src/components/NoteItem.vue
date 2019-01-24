@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="note">
         <h5>{{note.title}}</h5>
         <p>{{note.content}}</p>
     </div>
@@ -14,6 +14,14 @@ export default {
 </script>
 
 <style scoped>
+.note{
+    padding: 10px 5px;
+    border-bottom: 0.5px solid rgb(214, 215, 216);
+    text-align: left;
+}
 
+.note p{
+    color: #888;
+}
 </style>
 
