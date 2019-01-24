@@ -30,6 +30,10 @@ export default {
     },
     methods: {
         saveNote(e){
+            let token = localStorage.getItem('token');
+            if(token == null){
+                return this.$router.push('/signin')
+            }
             e.preventDefault();
             console.log("Saving note")
             axios.post(apiUrl, {
@@ -39,7 +43,7 @@ export default {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'authorization': sampleToken,
+                        'authorization': token,
                     }
                 })
                 .then(res => {
