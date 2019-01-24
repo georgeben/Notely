@@ -2,45 +2,39 @@
   <div id="app">
     <Navbar />
     <Notes v-bind:notes="notes" />
+    <AddNote />
   </div>
 </template>
 
 <script>
-import Notes from './components/Notes.vue'
-import Navbar from './components/Navbar.vue'
+import Notes from './components/Notes.vue';
+import Navbar from './components/Navbar.vue';
+import AddNote from './components/AddNote.vue';
+import axios from 'axios';
 
 export default {
   name: 'app',
   components: {
     Notes,
     Navbar,
+    AddNote,
   },
   data(){
     return {
       name: "Notely",
-      notes: [
-        {
-          id: 1,
-          title: "George the Great",
-          content: "This is a note to communicate my thoughts"
-        },
-        {
-          id: 2,
-          title: "Everything will be fine",
-          content: "I want to go and fry plantain"
-        },
-        {
-          id: 3,
-          title: "Saturday morning",
-          content: "This is a note to communicate my thoughts"
-        },
-        {
-          id: 4,
-          title: "My first step",
-          content: "This is a note to communicate my thoughts"
-        },
-      ]
+      notes: []
     }
+  },
+  methods: {
+
+  },
+  created(){
+    axios.get('http://localhost:3000/api/notes')
+    .then(res => {
+      console.log("Data",res.data.data);
+      this.notes = res.data.data;
+    })
+    .catch(err => console.log(err));
   }
 }
 </script>
