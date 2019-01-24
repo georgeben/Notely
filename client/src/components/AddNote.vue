@@ -18,7 +18,6 @@
 <script>
 import axios from 'axios';
 const apiUrl = 'http://localhost:3000/api/notes';
-const sampleToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiRW1la2EgRXplIiwiZW1haWwiOiJlbW15QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJDhOSG4wSDRrZ0xWczA1YkxSa1VaVGVXL2k5VDl2YURkMFA4d3F5UUFaRHdQQkVCM0lOc3pLIiwiY3JlYXRlZEF0IjoiMjAxOS0wMS0yM1QyMDo1ODozMS44NDdaIiwidXBkYXRlZEF0IjoiMjAxOS0wMS0yM1QyMDo1ODozMS44NDdaIn0sImlhdCI6MTU0ODMyOTg0NCwiZXhwIjoxNTQ4MzczMDQ0fQ.37fcyVNnh5aK-8iF27NmH81ueOsARIxBbF6hdr7QB0Y'
 
 export default {
     name: 'AddNote',
