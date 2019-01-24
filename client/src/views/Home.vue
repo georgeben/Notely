@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Notes v-bind:notes="notes" />
+    <Notes v-bind:notes="notes" v-bind:modify="false" />
   </div>
 </template>
 

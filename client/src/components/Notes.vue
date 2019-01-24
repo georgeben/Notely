@@ -1,7 +1,7 @@
 <template>
     <div class="notes">
         <div v-bind:key="note.id" v-for="note in notes" >
-            <NoteItem v-bind:note="note" />
+            <NoteItem v-bind:note="note" v-bind:modify="modify" />
         </div>
     </div>
 </template>
@@ -11,7 +11,7 @@ import NoteItem from './NoteItem.vue';
 
 export default {
     name: 'Notes',
-    props: ["notes"],
+    props: ["notes", "modify"],
     components: {
         NoteItem,
     }

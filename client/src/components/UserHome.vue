@@ -3,7 +3,7 @@
         <h1>Welcome {{user.name}}</h1>
         <button @click="signOut" class="btn btn-danger">Sign out</button>
 
-        <Notes v-bind:notes="userNotes"/>
+        <Notes v-bind:notes="userNotes" v-bind:modify="true" />
     </div>
 </template>
 
