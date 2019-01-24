@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import AddNote from './components/AddNote.vue'
+import AddNote from './components/AddNote.vue';
+import SignUp from './components/SignUp.vue';
+import SignIn from './components/SignIn.vue';
+import UserHome from './components/UserHome.vue'
 
 Vue.use(Router)
 
-export default new Router({
+let router =  new Router({
   mode: 'history',
   routes: [
     {
@@ -16,12 +19,59 @@ export default new Router({
     {
       path: '/signin',
       name: 'signin',
-      
+      component: SignIn,
+      meta: {
+        guest: true,
+      }
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: SignUp,
+      meta: {
+        guest: true,
+      }
     },
     {
       path: '/addnote',
       name: 'addnote',
       component: AddNote,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: '/home',
+      name: 'userhome',
+      component: UserHome,
+      meta: {
+        requiresAuth: true,
+      }
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  // console.log("To",to);
+  if(to.matched.some(record => record.meta.requiresAuth)){
+    if(localStorage.getItem('token') == null){
+      next({
+        path: '/signin',
+        params: {nextUrl: to.fullPath}
+      })
+    }else{
+      next();
+    }
+  }else if(to.matched.some(record => record.meta.guest)){
+    if(localStorage.getItem('token') == null){
+      next()
+    }else{
+      next({name: 'userhome'})
+    }
+  }else{
+    next();
+  }
+
 })
+
+export default router;

@@ -17,10 +17,10 @@
                 <router-link to="/" class="nav-link">Home</router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/about" class="nav-link">About</router-link>
+                <router-link to="/signup" class="nav-link">Sign Up</router-link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Log in</a>
+                <a class="nav-link" href="/signin">Log in</a>
             </li>
             <li class="nav-item">
                 <router-link to="/addnote" class="nav-link">New note</router-link>
