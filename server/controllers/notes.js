@@ -20,7 +20,6 @@ exports.createNote = (req, res, next) => {
                 message: 'Invalid token'
             })
         }
-
         let user = match.user;
         Note.create({
             title: req.body.title,
@@ -108,7 +107,6 @@ exports.updateNote = async (req, res, next) => {
     try{
         let note = await Note.findById(noteId);
         if(!note){
-            console.log("Note not found");
             return res.status(404).json({
                 status: 404,
                 message: 'Note does not exist'

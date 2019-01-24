@@ -14,6 +14,19 @@ exports.getAllUsers = async (req, res, next) => {
     }
 }
 
+function comparePasswords(password, hash){
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(password, hash, (err, res) => {
+            if(err){
+                reject(err);
+            }else{
+                resolve(res)
+            }
+
+        })
+    })
+}
+
 exports.createNewUser = async (req, res, next) => {
     let user = await User.findOne({
         where: {
@@ -32,16 +45,21 @@ exports.createNewUser = async (req, res, next) => {
             return next(err);
         }
         try{
-            let newUser = await User.create({
+            let response = await User.create({
                 name: req.body.name,
                 email: req.body.email,
                 password: hash,
-            })
+            });
+
+            let user = response[Object.keys(response)[0]];
+
+            let token  = await jwt.sign({ user }, process.env.TOKEN_KEY, {expiresIn: '12h'});
 
             return res.status(200).json({
                 status: 200,
                 message: 'User successfully created',
-                data: newUser,
+                data: user,
+                token: token,
             })
         }catch(err){
             return next(err);
@@ -52,16 +70,28 @@ exports.createNewUser = async (req, res, next) => {
 
 exports.signIn = async (req, res, next) => {
     try{
-        let user = await User.findOne({
+        let response = await User.findOne({
             where: {
                 email: req.body.email,
             }
         });
 
+        let user = response[Object.keys(response)[0]];
+
         if(!user){
             return res.status(400).json({
                 status: 400,
-                message: 'User not found'
+                message: 'User does not exist',
+            })
+        }
+
+        let match = await comparePasswords(req.body.password, user.password);
+        
+
+        if(!match){
+            return res.status(400).json({
+                status: 400,
+                message: 'Invalid password',
             })
         }
 
