@@ -1,11 +1,12 @@
 <template>
     <div class="note">
-        <h5>{{note.title}}</h5>
+        <router-link :to="`/view/${note.id}`">{{note.title}}</router-link>
         <p>{{note.content}}</p>
         <div v-if="modify" >
             <button>Edit Note</button>
             <button>Delete</button>
         </div>
+        <p>{{note.createdAt}}</p>
     </div>
 </template>
 

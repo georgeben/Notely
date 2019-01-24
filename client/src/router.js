@@ -4,7 +4,8 @@ import Home from './views/Home.vue'
 import AddNote from './components/AddNote.vue';
 import SignUp from './components/SignUp.vue';
 import SignIn from './components/SignIn.vue';
-import UserHome from './components/UserHome.vue'
+import UserHome from './components/UserHome.vue';
+import ViewNote from './components/ViewNote'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ let router =  new Router({
       meta: {
         requiresAuth: true,
       }
+    },
+    {
+      path: '/view/:id',
+      name: 'viewnote',
+      component: ViewNote,
     }
   ]
 });

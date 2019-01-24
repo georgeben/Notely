@@ -145,3 +145,16 @@ exports.getUserNotes = async (req, res, next) => {
         return next(err);
     }
 }
+
+exports.getSingleNote = async (req, res, next) =>{
+    let id = req.params.id;
+
+    try{
+        let note = await Note.findById(id);
+        return res.status(200).json({
+            note: note,
+        })
+    }catch(err){
+        return next(err);
+    }
+}
