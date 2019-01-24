@@ -1,6 +1,7 @@
+
 <template>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a class="navbar-brand" href="#">Notely</a>
+        <router-link to="/" class="navbar-brand">Home</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,16 +14,16 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <router-link to="/" class="nav-link">Home</router-link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Sign up</a>
+                <router-link to="/about" class="nav-link">About</router-link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Log in</a>
+                <a class="nav-link" href="">Log in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">New Note</a>
+                <router-link to="/addnote" class="nav-link">New note</router-link>
             </li>
         </ul>
         
