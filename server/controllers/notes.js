@@ -128,3 +128,20 @@ exports.updateNote = async (req, res, next) => {
         return next(err);
     }
 }
+
+exports.getUserNotes = async (req, res, next) => {
+    let user_id = req.params.id;
+    try{
+        let userNotes = await Note.findAll({
+            where: {
+                user_id: user_id,
+            }
+        });
+
+        return res.status(200).json({
+            data: userNotes,
+        })
+    }catch(err){
+        return next(err);
+    }
+}
