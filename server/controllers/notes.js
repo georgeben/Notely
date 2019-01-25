@@ -40,7 +40,11 @@ exports.createNote = (req, res, next) => {
 
 exports.displayAllNotes = async (req, res, next) => {
     try{
-        let notes = await Note.findAll();
+        let notes = await Note.findAll({
+            where: {
+                shared: true,
+            }
+        });
         res.status(200).json({
             status: 200,
             data: notes,
