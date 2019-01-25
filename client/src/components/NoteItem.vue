@@ -4,16 +4,29 @@
         <p>{{note.content}}</p>
         <div v-if="modify" >
             <button><router-link :to="`/edit/${note.id}`">Edit</router-link></button>
-            <button>Delete</button>
+            <button @click="deleteNote" >Delete</button>
         </div>
         <p>{{note.createdAt}}</p>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'NoteItem',
-    props: ["note", "modify"]
+    props: ["note", "modify"],
+    methods: {
+        deleteNote(){
+            axios.delete(`http://localhost:3000/api/notes/${this.note.id}`)
+            .then(res => {
+                this.$emit('delete-note', this.note.id);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+    }
 }
 
 </script>

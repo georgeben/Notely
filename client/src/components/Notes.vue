@@ -1,7 +1,7 @@
 <template>
     <div class="notes">
         <div v-bind:key="note.id" v-for="note in notes" >
-            <NoteItem v-bind:note="note" v-bind:modify="modify" />
+            <NoteItem v-bind:note="note" v-bind:modify="modify" v-on:delete-note="$emit('delete-note', note.id)" />
         </div>
     </div>
 </template>
