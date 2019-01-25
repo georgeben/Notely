@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    shared: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     }
   }, {});
   note.associate = function(models) {
