@@ -1,25 +1,50 @@
 const Note = require('../models').note;
+const jwt = require('jsonwebtoken');
 
-exports.createNote = async (req, res, next) => {
-    try{
-        let newNote = await Note.create({
+function verifyToken(token){
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, process.env.TOKEN_KEY, (err, match) => {
+            if(err){
+                reject(err);
+            }
+            resolve(match)
+        })
+    })
+}
+
+exports.createNote = (req, res, next) => {
+    jwt.verify(req.headers.authorization, process.env.TOKEN_KEY, (err, match) => {
+        if(err){
+            return res.status(401).json({
+                message: 'Invalid token'
+            })
+        }
+        let user = match.user;
+        Note.create({
             title: req.body.title,
             content: req.body.content,
+            user_id: user.id,
+            shared: req.body.shared,
         })
-
-        res.status(200).json({
-            message: 'Successfully created',
-            note: newNote,
+        .then((result) => { 
+            res.status(200).json({
+                message: "Success",
+                data: result,
+            })
         })
-    }catch(err){
-        return next(err);
-    }
-    
+        .catch((err) => {
+            return next(err);
+        })
+    })
 }
 
 exports.displayAllNotes = async (req, res, next) => {
     try{
-        let notes = await Note.findAll();
+        let notes = await Note.findAll({
+            where: {
+                shared: true,
+            }
+        });
         res.status(200).json({
             status: 200,
             data: notes,
@@ -82,28 +107,68 @@ exports.deleteNote = async (req, res, next) => {
 
 exports.updateNote = async (req, res, next) => {
     let noteId = req.params.id;
+    let token = req.headers.authorization;
 
     try{
-        let note = await Note.findById(noteId);
-        if(!note){
-            console.log("Note not found");
-            return res.status(404).json({
-                status: 404,
-                message: 'Note does not exist'
+        let match = await verifyToken(token);
+        let user = match.user;
+
+        if(user){
+            let note = await Note.findById(noteId);
+            if(!note){
+                return res.status(404).json({
+                    status: 404,
+                    message: 'Note does not exist'
+                });
+            }
+    
+            let updatedNote = await note.update({
+                title: req.body.title,
+                content: req.body.content,
             });
+    
+            res.status(200).json({
+                status: 200,
+                message: 'Successfully updated note',
+                data: updatedNote
+            })
         }
 
-        let updatedNote = await note.update({
-            title: req.body.title,
-            content: req.body.content,
+    }catch(err){
+        if(err.message == 'invalid signature'){
+            return res.status(403).json({
+                message: 'Unauthorized action'
+            })
+        }
+        return next(err);
+    }
+}
+
+exports.getUserNotes = async (req, res, next) => {
+    let user_id = req.params.id;
+    try{
+        let userNotes = await Note.findAll({
+            where: {
+                user_id: user_id,
+            }
         });
 
-        res.status(200).json({
-            status: 200,
-            message: 'Successfully updated note',
-            data: updatedNote
+        return res.status(200).json({
+            data: userNotes,
         })
+    }catch(err){
+        return next(err);
+    }
+}
 
+exports.getSingleNote = async (req, res, next) =>{
+    let id = req.params.id;
+
+    try{
+        let note = await Note.findById(id);
+        return res.status(200).json({
+            note: note,
+        })
     }catch(err){
         return next(err);
     }
