@@ -3,7 +3,7 @@
         <router-link :to="`/view/${note.id}`">{{note.title}}</router-link>
         <p>{{note.content}}</p>
         <div v-if="modify" >
-            <button>Edit Note</button>
+            <button><router-link :to="`/edit/${note.id}`">Edit</router-link></button>
             <button>Delete</button>
         </div>
         <p>{{note.createdAt}}</p>

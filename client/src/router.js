@@ -5,7 +5,8 @@ import AddNote from './components/AddNote.vue';
 import SignUp from './components/SignUp.vue';
 import SignIn from './components/SignIn.vue';
 import UserHome from './components/UserHome.vue';
-import ViewNote from './components/ViewNote'
+import ViewNote from './components/ViewNote';
+import EditNote from './components/EditNote.vue';
 
 Vue.use(Router)
 
@@ -53,6 +54,17 @@ let router =  new Router({
       path: '/view/:id',
       name: 'viewnote',
       component: ViewNote,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: '/edit/:id',
+      name: 'editnote',
+      component: EditNote,
+      meta: {
+        requiresAuth: true,
+      }
     }
   ]
 });
