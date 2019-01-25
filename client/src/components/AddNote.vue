@@ -8,7 +8,7 @@
             <textarea v-model="content" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Type your note here"></textarea>
         </div>
         <div class="form-check">
-            <input v-model="publish" type="checkbox" class="form-check-input" id="exampleCheck1">
+            <input v-model="shared" type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Publish</label>
         </div>
         <button type="submit" class="btn btn-primary">Save note</button>
@@ -25,7 +25,7 @@ export default {
         return {
             title: '',
             content: '',
-            publish: true,
+            shared: true,
         }
     },
     methods: {
@@ -38,7 +38,8 @@ export default {
             console.log("Saving note")
             axios.post(apiUrl, {
                     title: this.title,
-                    content: this.content
+                    content: this.content,
+                    shared: this.shared,
                 },
                 {
                     headers: {

@@ -24,6 +24,7 @@ exports.createNote = (req, res, next) => {
             title: req.body.title,
             content: req.body.content,
             user_id: user.id,
+            shared: req.body.shared,
         })
         .then((result) => { 
             res.status(200).json({
