@@ -35,7 +35,6 @@ export default {
                 return this.$router.push('/signin')
             }
             e.preventDefault();
-            console.log("Saving note")
             axios.post(apiUrl, {
                     title: this.title,
                     content: this.content,
@@ -48,7 +47,6 @@ export default {
                     }
                 })
                 .then(res => {
-                    console.log(res);
                     this.$router.push('/home');
                 })
                 .catch(err => console.log(err))

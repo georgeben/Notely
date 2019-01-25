@@ -34,7 +34,6 @@ export default {
                     password: this.password,
                 })
                 .then(res => {
-                    console.log(res.data)
                     localStorage.setItem('token',res.data.token);
                     localStorage.setItem('user', JSON.stringify(res.data.user));
                     if (localStorage.getItem('token') != null){

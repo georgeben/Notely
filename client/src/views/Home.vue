@@ -24,7 +24,6 @@ export default {
   created(){
     axios.get('http://localhost:3000/api/notes')
     .then(res => {
-      console.log("Data",res.data.data);
       this.notes = res.data.data;
     })
     .catch(err => console.log(err));

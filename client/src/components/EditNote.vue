@@ -44,7 +44,6 @@ export default {
                     }
                 })
                 .then(res => {
-                    console.log(res);
                     this.$router.push('/home');
                 })
                 .catch(err => console.log(err))
@@ -53,7 +52,6 @@ export default {
     created(){
         axios.get(`http://localhost:3000/api/notes/${this.$route.params.id}`)
         .then(res => {
-            console.log(res.data)
             this.note = res.data.note;
         })
     }
