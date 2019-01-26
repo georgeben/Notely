@@ -13,7 +13,7 @@
             <label for="signUpPassword">Password</label>
             <input v-model="password" type="password" class="form-control" id="signUpPassword" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="submit" class="btn">Sign in</button>
     </form>
 </template>
 
@@ -59,7 +59,36 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+form{
+    width: 40%;
+    background-color: #fff;
+    box-shadow: 1px 1px 3px #444;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    padding: 20px;
+    text-align: left;
+}
+
+form h5{
+    text-align: center;
+}
+
+form button.btn{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    background-color: #70CCA2;
+    color: white;
+}
+
+@media(max-width: 768px){
+    form{
+        width: 80%;
+    }
+}
 
 </style>
 
