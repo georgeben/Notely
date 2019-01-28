@@ -1,6 +1,7 @@
 <template>
     <form @submit="signInUser">
         <h5>Sign In to Notely</h5>
+        <p class="error">{{error}}</p>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input v-model="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
@@ -23,12 +24,13 @@ export default {
         return{
             email: '',
             password:'',
+            error: '',
         }
     },
     methods: {
         signInUser(e){
             e.preventDefault();
-            if(this.email != '' && this.password != ''){
+            if(this.email !== '' && this.password !== ''){
                 axios.post('http://localhost:3000/api/users/signin', {
                     email: this.email,
                     password: this.password,
@@ -47,6 +49,8 @@ export default {
                 })
                 .catch(err => console.log(err));
             }else{
+                // alert("Please fill all inputs")
+                this.error = 'Please fill all inputs';
                 console.log("Invalid input")
             }
         }
@@ -77,6 +81,11 @@ form button.btn{
     width: 70%;
     background-color: #70CCA2;
     color: white;
+}
+
+.error{
+    color: red;
+    font-size: 0.9em;
 }
 
 @media(max-width: 768px){

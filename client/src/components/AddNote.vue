@@ -1,6 +1,7 @@
 <template>
     <form @submit="saveNote">
         <h5>Create a new note</h5>
+        <p class="error">{{error}}</p>
         <div class="form-group">
             <label for="exampleFormControlInput1">Note Title</label>
             <input v-model="title" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter the title of your note">
@@ -27,15 +28,21 @@ export default {
             title: '',
             content: '',
             shared: true,
+            error:'',
         }
     },
     methods: {
         saveNote(e){
+             e.preventDefault();
+            if(this.title === '' || this.content === ''){
+                this.error = 'Please fill all inputs';
+                return;
+            }
+            this.error = '';
             let token = localStorage.getItem('token');
             if(token == null){
                 return this.$router.push('/signin')
             }
-            e.preventDefault();
             axios.post(apiUrl, {
                     title: this.title,
                     content: this.content,
@@ -70,6 +77,11 @@ form{
 
 form h5{
     text-align: center;
+}
+
+.error{
+    color: red;
+    font-size: 0.9em;
 }
 
 form button.btn{

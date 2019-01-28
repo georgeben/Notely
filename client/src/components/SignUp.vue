@@ -1,6 +1,7 @@
 <template>
     <form @submit="signInUser">
         <h5>Create an account Notely</h5>
+        <p class="error">{{error}}</p>
         <div class="form-group">
             <label for="signUpName">Name</label>
             <input v-model="name" type="text" class="form-control" id="signUpName" aria-describedby="emailHelp" placeholder="Enter your full name">
@@ -37,6 +38,7 @@ export default {
                     name: this.name,
                     email: this.email,
                     password: this.password,
+                    error: '',
                 })
                 .then(res => {
                     localStorage.setItem('token',res.data.token);
@@ -52,6 +54,8 @@ export default {
                 })
                 .catch(err => console.log(err));
             }else{
+                // alert("Please fill all inputs")
+                this.error = 'Please fill all inputs';
                 console.log("Invalid input")
             }
         }
@@ -82,6 +86,11 @@ form button.btn{
     width: 70%;
     background-color: #70CCA2;
     color: white;
+}
+
+.error{
+    color: red;
+    font-size: 0.9em;
 }
 
 @media(max-width: 768px){
