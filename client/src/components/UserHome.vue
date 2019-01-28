@@ -1,8 +1,9 @@
 <template>
     <div>
-        <h1>Welcome {{user.name}}</h1>
-        <button @click="signOut" class="btn btn-danger">Sign out</button>
-
+        <div class="user-info">
+            <h3>{{user.name}}'s notes</h3>
+            <a @click="signOut">Sign out</a>
+        </div>
         <Notes v-bind:notes="userNotes" v-bind:modify="true" v-on:delete-note="removeNoteFromList" />
     </div>
 </template>
@@ -42,8 +43,20 @@ export default {
 }
 </script>
 
-<style>
+<style >
+.user-info{
+    background-color: #fff;
+    text-align: left;
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
 
+.user-info a{
+    color: red !important;
+    cursor: pointer;
+}
 </style>
 
 
