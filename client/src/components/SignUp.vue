@@ -13,7 +13,7 @@
             <label for="signUpPassword">Password</label>
             <input v-model="password" type="password" class="form-control" id="signUpPassword" placeholder="Password">
         </div>
-        <button type="submit" class="btn">Sign in</button>
+        <button type="submit" class="btn">Sign up</button>
     </form>
 </template>
 

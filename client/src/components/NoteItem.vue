@@ -3,10 +3,30 @@
         <router-link :to="`/view/${note.id}`">{{note.title}}</router-link>
         <p>{{note.content}}</p>
         <div v-if="modify" >
-            <button><router-link :to="`/edit/${note.id}`">Edit</router-link></button>
-            <button @click="deleteNote" >Delete</button>
+            <button class=" btn edit"><router-link :to="`/edit/${note.id}`" class="edit-link" >Edit</router-link></button>
+            <button class="btn delete"  data-toggle="modal" data-target="#exampleModal" >Delete</button>
+
         </div>
         <p>{{note.createdAt}}</p>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Note</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete {{note.title}}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="deleteNote" type="button" class="btn delete" data-dismiss="modal">Delete note</button>
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -40,6 +60,22 @@ export default {
 
 .note p{
     color: #888;
+}
+
+.edit{
+    background-color: rgb(0, 76, 255);
+    color: white;
+    margin-right: 10px;
+}
+
+.edit-link{
+    color: white;
+}
+
+.delete{
+    background-color: red;
+    color: white;
+
 }
 </style>
 
